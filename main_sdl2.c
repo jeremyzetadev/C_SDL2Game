@@ -5,46 +5,11 @@
 // On linux compile with:
 // g++ -std=c++17 main.c glad/src/glad.c -I./glad/include -o main -lSDL2 -ldl
 
+#include "engine/global.h"
 #include "glad/include/glad/glad.h"
 #include <SDL2/SDL.h>
 
 int main(int argc, char *argv[]){
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION,3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION,3);
-
-    if(SDL_Init(SDL_INIT_VIDEO) <0){
-        printf("Could not init SDL: %s\n", SDL_GetError());
-        exit(1);
-    }
-
-    SDL_Window *window = SDL_CreateWindow(
-            "MyGame",
-            SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED,
-            800,
-            600,
-            SDL_WINDOW_OPENGL
-            );
-
-    if(!window){
-        printf("Failed to init window: %s\n", SDL_GetError());
-        exit(1);
-    }
-
-    SDL_GL_CreateContext(window);
-    // if(!gladLOADGLLoader((GLADloadproc)SDL_GL_GetProcAddress)){
-    // // if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-    //     printf("Failed to load GL: %s\n", SDL_GetError());
-    //     exit(1);
-    // }
-    gladLoadGL();
-
-    puts("OpenGL Loaded");
-    printf("Vendor: %s\n", glGetString(GL_VENDOR));
-    printf("Vendor: %s\n", glGetString(GL_VENDOR));
-    printf("Vendor: %s\n", glGetString(GL_VENDOR));
-
     puts("Hello there!");
 
     bool should_quit =false;
@@ -61,6 +26,15 @@ int main(int argc, char *argv[]){
                     break;
             }
         }
+        
+        render_begin();
+
+        render_quad(
+                (vec2){global.render.width * 0.5, global.render.height *0.5},
+                (vec2){50,50},
+                (vec4){1,1,1,1});
+
+        render_end();
     }
     return 0;
 }
