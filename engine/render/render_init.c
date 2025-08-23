@@ -1,4 +1,4 @@
-#include <glad/include/glad/glad.h>
+#include "../../glad/include/glad/glad.h"
 #include <SDL2/SDL.h>
 
 #include "../util.h"
@@ -78,7 +78,7 @@ void render_init_quad(u32 *vao, u32 *vbo, u32 *ebo){
     glEnableVertexAttribArray(0);
 
     // uv
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(f32), (void*)(3*sizeof(f32)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(f32), (void*)(3*sizeof(f32)));
     glEnableVertexAttribArray(1);
 }
 

@@ -1,0 +1,21 @@
+
+
+GLAD_INC = glad/src/glad.c -I./glad/include
+LIB_INC = -lglfw -lGL -lm -lX11 -lpthread -lXrandr -lXi -ldl -lDSL2
+
+all: main_sdl2run 
+
+main_sdl2run: main_sdl2.o global.o render.o 
+	gcc main_sdl2.o global.o render.o {GLAD_INC} {LIB_INC}
+
+main_sdl2.o: main_sdl2.c engine/render/render.h
+	gcc main_sdl2.c
+
+global.o: global.c global.h
+	gcc -c global.c
+
+render.o: render.c render.h render_internal.h render_init.c 
+	gcc -c render.c
+
+clean:
+	rm *.o maid_sdl2run
