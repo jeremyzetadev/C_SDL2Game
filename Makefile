@@ -1,7 +1,8 @@
-render=engine/render/render.c engine/render/render_init.c
-files=main.c engine/global.c $(render)
+io=src/engine/io/io.c
+render=src/engine/render/render.c src/engine/render/render_init.c src/engine/render/render_util.c
+files=src/main.c src/engine/global.c $(render) $(io)
 
-glad=glad/src/glad.c -I./glad/include
+glad=deps/src/glad.c -I./deps/include
 libs=-lm `sdl2-config --cflags --libs` -lSDL2_mixer `pkg-config --libs glfw3` -ldl
 
 build:
