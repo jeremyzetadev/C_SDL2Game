@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <errno.h>
 
-#include "../types.h"
 #include "../util.h"
 #include "io.h"
 
@@ -17,7 +16,7 @@ File io_file_read(const char *path){
     File file = { .is_valid = false};
 
     File *fp = (File *)fopen(path, "rb");
-    if(ferror((FILE*)fp)){
+    if(!fp || ferror((FILE*)fp)){
         ERROR_RETURN(file, IO_READ_ERROR_GENERAL, path, errno);
     }
 
@@ -71,4 +70,33 @@ File io_file_read(const char *path){
 }
 
 
-int  io_file_write(void *buffer, size_t size, const char *path);
+int  io_file_write(void *buffer, size_t size, const char *path){
+    File *fp = (File*)fopen(path, "wb");
+    if (!fp || ferror((FILE*)fp))
+        ERROR_RETURN(1, "Cannot write file: %s.\n", path);
+
+    size_t chunks_written = fwrite(buffer, size, 1, (FILE*)fp);
+
+    fclose((FILE*)fp);
+
+    if(chunks_written!=1)
+        ERROR_RETURN(1,"write error. Expected 1 chunk, got %zu.\n", chunks_written);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

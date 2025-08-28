@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 
 #include "../util.h"
-#include "../global.h"
+#include "../global/global.h"
 
 #include "render.h"
 #include "render_internal.h"
